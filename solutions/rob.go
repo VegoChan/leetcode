@@ -1,17 +1,7 @@
 //leetcode题目：打家劫舍
 package main
 
-import "fmt"
 
-func main(){
-
-	nums := [...]int{2,7,9,3,1}//1,2,3,1
-
-	fmt.Println(robII(nums[:]))
-	fmt.Println(rob(nums[:]))
-	fmt.Println(robIII(nums[:]))
-
-}
 
 //子问题：偷到第i户的最大金额（与偷盗前i户不同），即dp[i]
 //子问题转化为对第i户的决策问题，偷，只有一个选项，子问题定义决定
@@ -33,7 +23,7 @@ func rob(nums []int) int{
 	dp[1] = nums[1]
 
 	for i := 2; i < length; i++{
-		dp[i] = max(dp[i-2]+nums[i],dp[i-1]-nums[i-1]+nums[i])
+		dp[i] = Max(dp[i-2]+nums[i],dp[i-1]-nums[i-1]+nums[i])
 	}
 
 	max := dp[0]
@@ -63,10 +53,10 @@ func robII(nums []int) int{
 
 	dp := make([]int, length)
 	dp[0] = nums[0]
-	dp[1] = max(nums[0],nums[1])
+	dp[1] = Max(nums[0],nums[1])
 
 	for i := 2; i < length; i++{
-		dp[i] = max(dp[i-1],dp[i-2]+nums[i])
+		dp[i] = Max(dp[i-1],dp[i-2]+nums[i])
 	}
 
 	return dp[length-1]
@@ -82,21 +72,21 @@ func robIII(nums []int) int{
 		return nums[0]
 	}
 	if length == 2{
-		return max(nums[0],nums[1])
+		return Max(nums[0],nums[1])
 	}
 	var a,b,c int
 	a = nums[0]
-	b = max(nums[0],nums[1])
+	b = Max(nums[0],nums[1])
 
 	for i := 2; i < length; i++{
-		c = max(b,nums[i]+a)
+		c = Max(b,nums[i]+a)
 		a = b
 		b = c
 	}
 
 	return c
 }
-func max(x,y int) int{
+func Max(x,y int) int{
 	if x > y{
 		return x
 	}
